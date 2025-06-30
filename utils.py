@@ -185,6 +185,9 @@ def find_shortcuts(target_exe: str) -> list:
 
 def modify_shortcut_arguments(shortcut_path: str, new_arguments: str) -> bool:
     """Modify arguments of an existing shortcut"""
+    if sys.platform != 'win32':
+        return False
+        
     try:
         import win32com.client
         

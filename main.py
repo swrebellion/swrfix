@@ -146,8 +146,8 @@ def main():
     """Main application entry point"""
     # Check if running on Windows
     if sys.platform != 'win32':
-        print("This installer is designed for Windows only.")
-        sys.exit(1)
+        print("Note: This installer is designed for Windows. Running in demo mode on Linux.")
+        print("Some features will be simulated for demonstration purposes.")
     
     args = parse_arguments()
     
