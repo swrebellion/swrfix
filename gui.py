@@ -394,9 +394,19 @@ class InstallerGUI:
     
     def show_completion_dialog(self):
         """Show installation completion dialog"""
+        # Show multiplayer info first if requested
+        from config import MULTIPLAYER_INFO
+        messagebox.showinfo(
+            "Multiplayer Port Information",
+            MULTIPLAYER_INFO
+        )
+        
+        # Show completion options
         result = messagebox.askyesnocancel(
             "Installation Complete",
             "Star Wars: Rebellion Community Fix has been installed successfully!\n\n"
+            f"Modified {len(self.installer.shortcuts_modified)} shortcuts with -w flag.\n"
+            f"Steam version detected: {'Yes' if self.installer.is_steam_version else 'No'}\n\n"
             "Would you like to:\n"
             "• Yes: Launch the game now\n"
             "• No: Open game folder\n"

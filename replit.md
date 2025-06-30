@@ -118,7 +118,20 @@ The application is built in Python using tkinter for the GUI and provides both g
 5. Installer handles all file operations and system configuration
 
 ## Changelog
-- June 30, 2025. Initial setup
+- June 30, 2025: Initial setup and core architecture
+- June 30, 2025: Implemented all critical features from AI prompt:
+  - ✓ Complete game detection system with 7 common paths
+  - ✓ Steam version detection and warnings
+  - ✓ Critical shortcut modification with -w flag (as specified)
+  - ✓ Comprehensive backup system with timestamp support
+  - ✓ All 4 patch files installation (D3Dlmm.dll, d3drm.dll, DDraw.dll, REBEXE.exe)
+  - ✓ Windows XP compatibility configuration
+  - ✓ Multiplayer port information display
+  - ✓ Command-line interface with all specified options
+  - ✓ Complete error handling and validation
+  - ✓ Professional GUI with progress tracking
+  - ✓ Uninstall/restore functionality
+  - ✓ Cross-platform compatibility (Windows primary, demo on Linux)
 
 ## User Preferences
 
