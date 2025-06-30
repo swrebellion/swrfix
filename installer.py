@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Optional, List, Dict
 
 from config import COMMON_PATHS, PATCH_FILES, BACKUP_FILES, VERSION
-from utils import setup_logging, is_admin, run_as_admin, get_file_version
+from utils import setup_logging, is_admin, run_as_admin, get_file_version, find_shortcuts, modify_shortcut_arguments, create_shortcut
 
 # Windows-only imports
 if sys.platform == 'win32':
@@ -34,6 +34,8 @@ class RebellionFixInstaller:
         self.backup_path: Optional[str] = None
         self.skip_backup: bool = False
         self.remove_briefings: bool = False
+        self.shortcuts_modified: List[str] = []
+        self.is_steam_version: bool = False
         self.logger = setup_logging()
         
     def find_game_installation(self) -> Optional[str]:
@@ -64,6 +66,12 @@ class RebellionFixInstaller:
             return False
         
         self.logger.info(f"Valid game installation found at: {path}")
+        
+        # Check if this is a Steam installation
+        if "steam" in path.lower():
+            self.is_steam_version = True
+            self.logger.info("Steam version detected")
+        
         return True
     
     def check_patch_files(self) -> bool:
@@ -221,6 +229,63 @@ class RebellionFixInstaller:
         except Exception as e:
             self.logger.error(f"Failed to install patch files: {e}")
             return False
+    
+    def modify_shortcuts(self) -> bool:
+        """Find and modify existing shortcuts to add -w flag"""
+        if not self.game_path:
+            return False
+        
+        exe_path = Path(self.game_path) / "REBEXE.exe"
+        if not exe_path.exists():
+            return False
+        
+        try:
+            # Find existing shortcuts
+            shortcuts = find_shortcuts(str(exe_path))
+            
+            for shortcut_path in shortcuts:
+                try:
+                    # Modify shortcut to add -w flag
+                    if modify_shortcut_arguments(str(shortcut_path), "-w"):
+                        self.shortcuts_modified.append(str(shortcut_path))
+                        self.logger.info(f"Modified shortcut: {shortcut_path}")
+                    else:
+                        self.logger.warning(f"Failed to modify shortcut: {shortcut_path}")
+                except Exception as e:
+                    self.logger.warning(f"Error modifying shortcut {shortcut_path}: {e}")
+            
+            # Create desktop shortcut if none exist
+            if not shortcuts:
+                desktop_path = Path.home() / "Desktop" / "Star Wars Rebellion.lnk"
+                if create_shortcut(
+                    str(exe_path),
+                    str(desktop_path),
+                    arguments="-w",
+                    working_directory=str(self.game_path),
+                    description="Star Wars: Rebellion with Community Fix"
+                ):
+                    self.shortcuts_modified.append(str(desktop_path))
+                    self.logger.info(f"Created desktop shortcut with -w flag")
+            
+            return True
+            
+        except Exception as e:
+            self.logger.error(f"Failed to modify shortcuts: {e}")
+            return False
+    
+    def check_existing_backups(self) -> List[str]:
+        """Check for existing backup folders and return their names"""
+        if not self.game_path:
+            return []
+        
+        game_dir = Path(self.game_path)
+        backups = []
+        
+        for item in game_dir.iterdir():
+            if item.is_dir() and item.name.startswith("Backup_"):
+                backups.append(item.name)
+        
+        return sorted(backups, reverse=True)  # Most recent first
     
     def configure_compatibility(self) -> bool:
         """Configure Windows compatibility settings for REBEXE.exe"""

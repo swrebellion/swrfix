@@ -101,6 +101,7 @@ INSTALLATION_STEPS = [
     "Creating backup...", 
     "Installing patch files...",
     "Configuring compatibility...",
+    "Modifying shortcuts with -w flag...",
     "Removing briefing files...",
     "Installation complete!"
 ]
