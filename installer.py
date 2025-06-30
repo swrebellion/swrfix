@@ -5,16 +5,25 @@ Core installation logic
 
 import os
 import shutil
-import winreg
 import subprocess
 import hashlib
 import logging
+import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Optional, List, Dict
 
 from config import COMMON_PATHS, PATCH_FILES, BACKUP_FILES, VERSION
 from utils import setup_logging, is_admin, run_as_admin, get_file_version
+
+# Windows-only imports
+if sys.platform == 'win32':
+    try:
+        import winreg
+    except ImportError:
+        winreg = None
+else:
+    winreg = None
 
 
 class RebellionFixInstaller:
@@ -61,9 +70,24 @@ class RebellionFixInstaller:
         """Check if all required patch files are available"""
         installer_dir = Path(__file__).parent
         
+        # Check in installer directory first
         for filename in PATCH_FILES:
             file_path = installer_dir / filename
-            if not file_path.exists():
+            if file_path.exists():
+                continue
+            
+            # Check in attached_assets directory
+            assets_path = installer_dir / "attached_assets" / filename
+            if filename == "REBEXE.exe":
+                assets_path = installer_dir / "attached_assets" / "REBEXE_1751323218170.EXE"
+            elif filename == "D3Dlmm.dll":
+                assets_path = installer_dir / "attached_assets" / "D3DImm_1751323218171.dll"
+            elif filename == "DDraw.dll":
+                assets_path = installer_dir / "attached_assets" / "DDraw_1751323218169.dll"
+            elif filename == "d3drm.dll":
+                assets_path = installer_dir / "attached_assets" / "d3drm_1751323218167.dll"
+            
+            if not assets_path.exists():
                 self.logger.error(f"Patch file not found: {filename}")
                 return False
         
@@ -158,7 +182,23 @@ class RebellionFixInstaller:
         
         try:
             for filename in PATCH_FILES:
+                # Try installer directory first
                 source_file = installer_dir / filename
+                
+                # If not found, check attached_assets with renamed files
+                if not source_file.exists():
+                    if filename == "REBEXE.exe":
+                        source_file = installer_dir / "attached_assets" / "REBEXE_1751323218170.EXE"
+                    elif filename == "D3Dlmm.dll":
+                        source_file = installer_dir / "attached_assets" / "D3DImm_1751323218171.dll"
+                    elif filename == "DDraw.dll":
+                        source_file = installer_dir / "attached_assets" / "DDraw_1751323218169.dll"
+                    elif filename == "d3drm.dll":
+                        source_file = installer_dir / "attached_assets" / "d3drm_1751323218167.dll"
+                
+                if not source_file.exists():
+                    raise Exception(f"Source file not found: {filename}")
+                
                 dest_file = game_dir / filename
                 
                 # Copy file
@@ -191,15 +231,23 @@ class RebellionFixInstaller:
         if not exe_path.exists():
             return False
         
+        # Only run on Windows with winreg available
+        if sys.platform != 'win32' or winreg is None:
+            self.logger.info("Compatibility settings skipped (not Windows or winreg unavailable)")
+            return True
+        
         try:
             # Registry path for compatibility settings
-            reg_path = f"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\AppCompatFlags\\Layers"
+            reg_path = r"SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers"
+            
+            # Import winreg constants
+            from winreg import CreateKey, HKEY_CURRENT_USER, SetValueEx, REG_SZ
             
             # Open or create registry key
-            with winreg.CreateKey(winreg.HKEY_CURRENT_USER, reg_path) as key:
+            with CreateKey(HKEY_CURRENT_USER, reg_path) as key:
                 # Set compatibility mode and run as administrator
                 compatibility_flags = "WINXPSP3 RUNASADMIN"
-                winreg.SetValueEx(key, str(exe_path), 0, winreg.REG_SZ, compatibility_flags)
+                SetValueEx(key, str(exe_path), 0, REG_SZ, compatibility_flags)
             
             self.logger.info("Compatibility settings configured")
             return True

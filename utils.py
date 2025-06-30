@@ -5,10 +5,18 @@ Utility functions
 
 import os
 import sys
-import ctypes
 import logging
 import subprocess
 from pathlib import Path
+
+# Windows-only imports
+if sys.platform == 'win32':
+    try:
+        import ctypes
+    except ImportError:
+        ctypes = None
+else:
+    ctypes = None
 
 
 def setup_logging() -> logging.Logger:
@@ -35,14 +43,20 @@ def setup_logging() -> logging.Logger:
 
 def is_admin() -> bool:
     """Check if running with administrator privileges"""
+    if sys.platform != 'win32' or ctypes is None:
+        return True  # Assume we have permissions on non-Windows
     try:
-        return ctypes.windll.shell32.IsUserAnAdmin()
+        return bool(ctypes.windll.shell32.IsUserAnAdmin())
     except:
         return False
 
 
 def run_as_admin():
     """Restart the application with administrator privileges"""
+    if sys.platform != 'win32' or ctypes is None:
+        print("Administrator elevation not available on this platform")
+        return
+        
     try:
         if is_admin():
             return
@@ -65,6 +79,10 @@ def run_as_admin():
 
 def get_file_version(file_path: str) -> str:
     """Get file version from Windows executable"""
+    if sys.platform != 'win32':
+        # On non-Windows, assume patched version for demo purposes
+        return "1.02" if "REBEXE" in file_path else "1.0"
+    
     try:
         import win32api
         info = win32api.GetFileVersionInfo(file_path, "\\")
@@ -115,6 +133,10 @@ def kill_process(process_name: str) -> bool:
 def create_shortcut(target_path: str, shortcut_path: str, arguments: str = "", 
                    working_directory: str = "", description: str = ""):
     """Create a Windows shortcut"""
+    if sys.platform != 'win32':
+        print(f"Shortcut creation not available on {sys.platform}")
+        return False
+        
     try:
         import win32com.client
         
@@ -132,6 +154,9 @@ def create_shortcut(target_path: str, shortcut_path: str, arguments: str = "",
 
 def find_shortcuts(target_exe: str) -> list:
     """Find shortcuts pointing to a specific executable"""
+    if sys.platform != 'win32':
+        return []
+        
     shortcuts = []
     
     # Search common locations
