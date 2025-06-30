@@ -20,10 +20,10 @@ class InstallerGUI:
     def __init__(self):
         self.root = tk.Tk()
         self.installer = RebellionFixInstaller()
-        self.setup_window()
-        self.create_widgets()
         self.current_step = 0
         self.total_steps = 5
+        self.setup_window()
+        self.create_widgets()
         
     def setup_window(self):
         """Setup main window properties"""
