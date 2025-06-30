@@ -21,7 +21,7 @@ class InstallerGUI:
         self.root = tk.Tk()
         self.installer = RebellionFixInstaller()
         self.current_step = 0
-        self.total_steps = 5
+        self.total_steps = 6  # Added shortcut modification step
         self.setup_window()
         self.create_widgets()
         
@@ -223,6 +223,19 @@ class InstallerGUI:
             if not result:
                 return False
         
+        # Warn about Steam version
+        if self.installer.is_steam_version:
+            result = messagebox.askyesno(
+                "Steam Version Detected",
+                "Steam version of the game detected.\n\n"
+                "WARNING: Steam may verify and restore original files, overwriting this patch.\n"
+                "Consider disabling automatic updates for this game in Steam.\n\n"
+                "Do you want to continue with the installation?",
+                icon="warning"
+            )
+            if not result:
+                return False
+        
         # Check permissions
         if not self.installer.check_permissions():
             if not is_admin():
@@ -309,15 +322,19 @@ class InstallerGUI:
             else:
                 self.current_step += 1
             
-            # Step 4: Remove briefings
+            # Step 4: Modify shortcuts with -w flag (CRITICAL)
+            self.update_progress("Modifying shortcuts with -w flag...", 4)
+            self.installer.modify_shortcuts()
+            
+            # Step 5: Remove briefings
             if self.installer.remove_briefings:
-                self.update_progress("Removing briefing files...", 4)
+                self.update_progress("Removing briefing files...", 5)
                 self.installer.remove_intro_briefings()
             else:
                 self.current_step += 1
             
-            # Step 5: Complete
-            self.update_progress("Installation completed!", 5)
+            # Step 6: Complete
+            self.update_progress("Installation completed!", 6)
             
             # Show completion dialog
             self.root.after(0, self.show_completion_dialog)
