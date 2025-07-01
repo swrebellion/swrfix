@@ -109,9 +109,16 @@ The application is built in Python using tkinter for the GUI and provides both g
 - **Standalone Executable**: PyInstaller-generated .exe for end users
 - **Source Distribution**: Python scripts for developers and advanced users
 - **Package Structure**: Installer executable bundled with patch files
+- **GitHub Releases**: Automated releases via GitHub Actions workflow
+
+### Release Process
+1. **Automated Release**: Push git tag to trigger GitHub Actions workflow
+2. **Manual Release**: Use prepare_release.py or quick_release.py scripts
+3. **Build Output**: 56MB standalone Windows executable with custom icon
+4. **Distribution Package**: ZIP file containing executable and all patch files
 
 ### Installation Process
-1. User downloads installer package
+1. User downloads installer package from GitHub Releases
 2. Extracts to temporary directory
 3. Runs installer executable
 4. Follows GUI wizard or uses command-line options
@@ -132,6 +139,13 @@ The application is built in Python using tkinter for the GUI and provides both g
   - ✓ Professional GUI with progress tracking
   - ✓ Uninstall/restore functionality
   - ✓ Cross-platform compatibility (Windows primary, demo on Linux)
+- July 1, 2025: GitHub Release deployment setup completed:
+  - ✓ GitHub Actions workflow for automated releases
+  - ✓ Multiple build scripts (prepare_release.py, quick_release.py, fix_pyinstaller.py)
+  - ✓ Windows executable successfully built with custom rebexe2.ico icon
+  - ✓ Distribution package creation with all required files
+  - ✓ Comprehensive release documentation and guides
+  - ✓ Git configuration with proper .gitignore
 
 ## User Preferences
 
