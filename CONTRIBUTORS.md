@@ -22,4 +22,4 @@ Thanks to the Star Wars: Rebellion community for keeping this classic strategy g
 
 ## License
 
-This installer is provided under the MIT License. The community fix patches are provided by TruthRealm and distributed with permission for the benefit of the Star Wars: Rebellion community.
+This installer is provided under the GNU General Public License v3.0. The community fix patches are provided by TruthRealm and distributed with permission for the benefit of the Star Wars: Rebellion community.
