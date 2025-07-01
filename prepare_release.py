@@ -8,6 +8,7 @@ import os
 import shutil
 import subprocess
 import sys
+import stat
 from pathlib import Path
 import zipfile
 
@@ -48,11 +49,25 @@ def build_executable():
     """Build the standalone executable"""
     print("\nBuilding executable...")
     
-    # Clean previous builds
+    # Clean previous builds with Windows permission handling
+    def remove_readonly(func, path, _):
+        """Clear readonly bit and reattempt removal"""
+        os.chmod(path, stat.S_IWRITE)
+        func(path)
+    
     if Path("build").exists():
-        shutil.rmtree("build")
+        try:
+            shutil.rmtree("build", onerror=remove_readonly)
+            print("✓ Cleaned build directory")
+        except Exception as e:
+            print(f"Note: Could not remove build directory: {e}")
+    
     if Path("dist").exists():
-        shutil.rmtree("dist")
+        try:
+            shutil.rmtree("dist", onerror=remove_readonly)
+            print("✓ Cleaned dist directory")
+        except Exception as e:
+            print(f"Note: Could not remove dist directory: {e}")
     
     # Try to find pyinstaller executable
     pyinstaller_cmd = None
