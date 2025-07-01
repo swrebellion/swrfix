@@ -138,8 +138,19 @@ def create_distribution():
     dist_name = "Star_Wars_Rebellion_Community_Fix_v2.63.1.0"
     dist_path = Path(dist_name)
     
+    # Windows permission handling for distribution cleanup
+    def remove_readonly(func, path, _):
+        """Clear readonly bit and reattempt removal"""
+        os.chmod(path, stat.S_IWRITE)
+        func(path)
+    
     if dist_path.exists():
-        shutil.rmtree(dist_path)
+        try:
+            shutil.rmtree(dist_path, onerror=remove_readonly)
+            print("✓ Cleaned existing distribution directory")
+        except Exception as e:
+            print(f"Note: Could not remove distribution directory: {e}")
+            # Try to continue anyway
     
     dist_path.mkdir()
     
