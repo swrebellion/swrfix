@@ -1,6 +1,10 @@
 """
 Star Wars: Rebellion Community Fix Installer
 GUI implementation using tkinter
+
+Contributors:
+- TruthRealm: Creator of the Star Wars: Rebellion Community Fix v2.63.1.0 patches
+- Stratus (via Replit Agent AI / Claude Sonnet 4): Creator of this installer application
 """
 
 import tkinter as tk
@@ -62,7 +66,16 @@ class InstallerGUI:
             text=f"Version {VERSION}",
             font=("Arial", 10)
         )
-        version_label.grid(row=1, column=0, columnspan=2, pady=(0, 20))
+        version_label.grid(row=1, column=0, columnspan=2, pady=(0, 5))
+        
+        # Contributors label
+        contributors_label = ttk.Label(
+            main_frame,
+            text="Patch by TruthRealm • Installer by Stratus (Replit Agent AI)",
+            font=("Arial", 8),
+            foreground="gray"
+        )
+        contributors_label.grid(row=1, column=0, columnspan=2, pady=(15, 20))
         
         # Game path frame
         path_frame = ttk.LabelFrame(main_frame, text="Game Installation", padding="10")

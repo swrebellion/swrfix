@@ -2,6 +2,11 @@
 
 An automated installer for the Star Wars: Rebellion Community Fix v2.63.1.0, designed to make the patch installation process simple and user-friendly.
 
+## Contributors
+
+- **TruthRealm** - Creator of the Star Wars: Rebellion Community Fix v2.63.1.0 patches
+- **Stratus** (via Replit Agent AI / Claude Sonnet 4) - Creator of this installer application
+
 ## Features
 
 ### Automatic Game Detection

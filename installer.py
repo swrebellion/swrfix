@@ -1,6 +1,10 @@
 """
 Star Wars: Rebellion Community Fix Installer
 Core installation logic
+
+Contributors:
+- TruthRealm: Creator of the Star Wars: Rebellion Community Fix v2.63.1.0 patches
+- Stratus (via Replit Agent AI / Claude Sonnet 4): Creator of this installer application
 """
 
 import os
