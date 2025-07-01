@@ -54,25 +54,65 @@ def build_executable():
     if Path("dist").exists():
         shutil.rmtree("dist")
     
+    # Try to find pyinstaller executable
+    pyinstaller_cmd = None
+    
+    # Check if pyinstaller is in PATH
+    try:
+        subprocess.check_call(["pyinstaller", "--version"], 
+                            stdout=subprocess.DEVNULL, 
+                            stderr=subprocess.DEVNULL)
+        pyinstaller_cmd = "pyinstaller"
+        print("✓ Found pyinstaller in PATH")
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        # Try python -m PyInstaller
+        try:
+            subprocess.check_call([sys.executable, "-m", "PyInstaller", "--version"], 
+                                stdout=subprocess.DEVNULL, 
+                                stderr=subprocess.DEVNULL)
+            pyinstaller_cmd = [sys.executable, "-m", "PyInstaller"]
+            print("✓ Found PyInstaller as Python module")
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            print("✗ PyInstaller not found. Trying to install...")
+            try:
+                subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pyinstaller"])
+                pyinstaller_cmd = [sys.executable, "-m", "PyInstaller"]
+                print("✓ PyInstaller installed successfully")
+            except subprocess.CalledProcessError as e:
+                print(f"✗ Failed to install PyInstaller: {e}")
+                return False
+    
     # Build command
-    cmd = [
-        "pyinstaller",
+    if isinstance(pyinstaller_cmd, str):
+        cmd = [pyinstaller_cmd]
+    else:
+        cmd = pyinstaller_cmd
+    
+    cmd.extend([
         "--onefile",
         "--windowed",
         "--name", "Star_Wars_Rebellion_Community_Fix_Installer",
         "main.py"
-    ]
+    ])
     
     # Add icon if it exists
     if Path("icon.ico").exists():
         cmd.extend(["--icon", "icon.ico"])
+        print("✓ Using icon.ico for executable")
+    
+    print(f"Running: {' '.join(cmd)}")
     
     try:
         subprocess.check_call(cmd)
         print("✓ Executable built successfully")
         return True
     except subprocess.CalledProcessError as e:
-        print(f"✗ Build failed: {e}")
+        print(f"✗ Build failed with exit code {e.returncode}")
+        print("Try running the command manually to see detailed error messages")
+        return False
+    except FileNotFoundError as e:
+        print(f"✗ Command not found: {e}")
+        print("Please ensure PyInstaller is properly installed")
         return False
 
 def create_distribution():
