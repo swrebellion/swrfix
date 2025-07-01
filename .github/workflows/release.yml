@@ -50,6 +50,10 @@ jobs:
         body: |
           ## Star Wars: Rebellion Community Fix v2.63.1.0
           
+          ### Contributors
+          - **TruthRealm** - Creator of the Star Wars: Rebellion Community Fix v2.63.1.0 patches
+          - **Stratus** (via Replit Agent AI / Claude Sonnet 4) - Creator of this installer application
+          
           ### Features
           - ✅ Automatic game detection (GOG, Steam, Original versions)
           - ✅ Safe backup creation with timestamps

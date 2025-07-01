@@ -146,6 +146,9 @@ The application is built in Python using tkinter for the GUI and provides both g
   - ✓ Distribution package creation with all required files
   - ✓ Comprehensive release documentation and guides
   - ✓ Git configuration with proper .gitignore
+  - ✓ Contributor credits added throughout project:
+    - TruthRealm: Creator of the Star Wars: Rebellion Community Fix v2.63.1.0 patches
+    - Stratus (via Replit Agent AI / Claude Sonnet 4): Creator of this installer application
 
 ## User Preferences
 
