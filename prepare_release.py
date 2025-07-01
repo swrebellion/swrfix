@@ -193,7 +193,7 @@ SUPPORT:
 For issues, please check the log file: rebellion_fix_install.log
 """
     
-    with open(dist_path / "INSTALLATION_INSTRUCTIONS.txt", "w") as f:
+    with open(dist_path / "INSTALLATION_INSTRUCTIONS.txt", "w", encoding="utf-8") as f:
         f.write(instructions)
     print("✓ Created installation instructions")
     
