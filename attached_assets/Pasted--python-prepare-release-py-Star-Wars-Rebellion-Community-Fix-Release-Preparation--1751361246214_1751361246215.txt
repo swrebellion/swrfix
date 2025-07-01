@@ -1,0 +1,47 @@
+$ python prepare_release.py
+Star Wars: Rebellion Community Fix - Release Preparation
+============================================================
+Checking requirements...
+✓ PyInstaller is installed
+✓ pywin32 is installed
+✓ D3Dlmm.dll found
+✓ d3drm.dll found
+✓ DDraw.dll found
+✓ REBEXE.exe found
+
+Building executable...
+Traceback (most recent call last):
+  File "C:\Users\ryanm\Onedrive\Downloads\swrfix\prepare_release.py", line 217, in <module>
+    success = main()
+  File "C:\Users\ryanm\Onedrive\Downloads\swrfix\prepare_release.py", line 190, in main
+    if not build_executable():
+           ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\ryanm\Onedrive\Downloads\swrfix\prepare_release.py", line 71, in build_executable
+    subprocess.check_call(cmd)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "C:\Program Files\Python313\Lib\subprocess.py", line 414, in check_call
+    retcode = call(*popenargs, **kwargs)
+  File "C:\Program Files\Python313\Lib\subprocess.py", line 395, in call
+    with Popen(*popenargs, **kwargs) as p:
+         ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\subprocess.py", line 1039, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        pass_fds, cwd, env,
+                        ^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                        gid, gids, uid, umask,
+                        ^^^^^^^^^^^^^^^^^^^^^^
+                        start_new_session, process_group)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python313\Lib\subprocess.py", line 1554, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+                             # no special security
+                             ^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+                             cwd,
+                             ^^^^
+                             startupinfo)
+                             ^^^^^^^^^^^^
+FileNotFoundError: [WinError 2] The system cannot find the file specified
