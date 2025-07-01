@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Wars: Rebellion Community Fix Installer</title>
+    <meta name="description" content="Automated installer for Star Wars: Rebellion Community Fix v2.63.1.0 - Making the classic strategy game playable on modern Windows systems">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            color: #ffd700;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .version {
+            color: #87ceeb;
+            font-size: 1rem;
+            margin-left: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #87ceeb;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 0;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+            color: #ffd700;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            color: #87ceeb;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #1a1a2e;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 16px rgba(255, 215, 0, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(255, 215, 0, 0.4);
+        }
+
+        .features {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 80px 0;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: #1a1a2e;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            color: #1a1a2e;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .contributors {
+            background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+            padding: 60px 0;
+            color: white;
+            text-align: center;
+        }
+
+        .contributors h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            color: #ffd700;
+        }
+
+        .contributor-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contributor-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .contributor-card h3 {
+            color: #ffd700;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .contributor-card p {
+            color: #87ceeb;
+            font-size: 0.9rem;
+        }
+
+        .installation {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 80px 0;
+        }
+
+        .installation h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: #1a1a2e;
+        }
+
+        .install-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .install-step {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .step-number {
+            background: #ffd700;
+            color: #1a1a2e;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 0 auto 20px;
+        }
+
+        .requirements {
+            background: #f8f9fa;
+            padding: 60px 0;
+        }
+
+        .requirements h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            color: #1a1a2e;
+        }
+
+        .req-list {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .req-list ul {
+            list-style: none;
+        }
+
+        .req-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .req-list li:before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        footer {
+            background: #1a1a2e;
+            color: #87ceeb;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .footer-links {
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: #87ceeb;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ffd700;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    SW:R Community Fix
+                    <span class="version">v2.63.1.0</span>
+                </div>
+                <nav class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#installation">Installation</a>
+                    <a href="#contributors">Contributors</a>
+                    <a href="https://github.com/your-username/star-wars-rebellion-installer">GitHub</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Star Wars: Rebellion<br>Community Fix Installer</h1>
+            <p>Automated installer for the Star Wars: Rebellion Community Fix v2.63.1.0<br>
+            Making the 1998 classic strategy game playable on modern Windows systems</p>
+            <a href="https://github.com/your-username/star-wars-rebellion-installer/releases/latest" class="download-btn">
+                Download Installer
+            </a>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🎯</span>
+                    <h3>Automatic Game Detection</h3>
+                    <p>Automatically finds your Star Wars: Rebellion installation across GOG, Steam, and original versions. Manual selection available if needed.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🛡️</span>
+                    <h3>Safe Installation</h3>
+                    <p>Creates timestamped backups of original files before patching. Full restore functionality available if needed.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">⚡</span>
+                    <h3>Modern Compatibility</h3>
+                    <p>Installs DirectX compatibility fixes (D3Dlmm.dll, d3drm.dll, DDraw.dll) and updated game executable for Windows 7-11.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🖥️</span>
+                    <h3>User-Friendly GUI</h3>
+                    <p>Professional Windows interface with progress tracking, error handling, and comprehensive logging throughout the process.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🔧</span>
+                    <h3>Advanced Options</h3>
+                    <p>Windows XP compatibility configuration, shortcut modification with -w flag, and optional briefing file removal.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">💻</span>
+                    <h3>Command Line Support</h3>
+                    <p>Full command-line interface available for advanced users and automation scenarios.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contributors" class="contributors">
+        <div class="container">
+            <h2>Contributors</h2>
+            <div class="contributor-cards">
+                <div class="contributor-card">
+                    <h3>TruthRealm</h3>
+                    <p>Creator of the Star Wars: Rebellion Community Fix v2.63.1.0 patches</p>
+                </div>
+                <div class="contributor-card">
+                    <h3>Stratus</h3>
+                    <p>Creator of this installer application<br>(via Replit Agent AI / Claude Sonnet 4)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="installation" class="installation">
+        <div class="container">
+            <h2>Installation Process</h2>
+            <div class="install-steps">
+                <div class="install-step">
+                    <div class="step-number">1</div>
+                    <h3>Download</h3>
+                    <p>Download the release package from GitHub Releases</p>
+                </div>
+                <div class="install-step">
+                    <div class="step-number">2</div>
+                    <h3>Extract</h3>
+                    <p>Extract all files to a folder on your computer</p>
+                </div>
+                <div class="install-step">
+                    <div class="step-number">3</div>
+                    <h3>Run</h3>
+                    <p>Run the installer executable as administrator</p>
+                </div>
+                <div class="install-step">
+                    <div class="step-number">4</div>
+                    <h3>Install</h3>
+                    <p>Follow the installer wizard to patch your game</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="requirements">
+        <div class="container">
+            <h2>System Requirements</h2>
+            <div class="req-list">
+                <ul>
+                    <li>Windows 7/8/10/11 (32-bit or 64-bit)</li>
+                    <li>Star Wars: Rebellion (any version - GOG, Steam, or original)</li>
+                    <li>50MB free disk space</li>
+                    <li>Administrator privileges (for Program Files installations)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="https://github.com/your-username/star-wars-rebellion-installer">GitHub Repository</a>
+                <a href="https://github.com/your-username/star-wars-rebellion-installer/releases">Releases</a>
+                <a href="https://github.com/your-username/star-wars-rebellion-installer/issues">Support</a>
+            </div>
+            <p>&copy; 2025 Star Wars: Rebellion Community Fix Installer</p>
+            <p>Licensed under GNU General Public License v3.0</p>
+            <p>Star Wars: Rebellion is a trademark of Lucasfilm Ltd.</p>
+        </div>
+    </footer>
+</body>
+</html>

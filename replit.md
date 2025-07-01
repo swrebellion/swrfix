@@ -150,6 +150,12 @@ The application is built in Python using tkinter for the GUI and provides both g
     - TruthRealm: Creator of the Star Wars: Rebellion Community Fix v2.63.1.0 patches
     - Stratus (via Replit Agent AI / Claude Sonnet 4): Creator of this installer application
   - ✓ License updated to GNU General Public License v3.0 (GPL-3.0)
+  - ✓ Professional GitHub Pages site created (index.html):
+    - Star Wars themed design with gold/blue color scheme
+    - Responsive layout for desktop and mobile
+    - Feature showcase and installation instructions
+    - Proper contributor credits for TruthRealm and Stratus
+    - Direct download links to GitHub releases
 
 ## User Preferences
 
