@@ -27,7 +27,7 @@ if errorlevel 1 (
 
 echo.
 echo Building executable...
-pyinstaller --onefile --windowed --name "Star_Wars_Rebellion_Community_Fix_Installer" main.py
+pyinstaller --onefile --windowed --name "Star_Wars_Rebellion_Community_Fix_Installer" --icon=icon.ico main.py
 
 if exist "dist\Star_Wars_Rebellion_Community_Fix_Installer.exe" (
     echo.
