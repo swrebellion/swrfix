@@ -16,6 +16,11 @@
 - Created build scripts and GitHub Actions workflow for releases
 - Designed user-friendly installation process with safety features
 
+## Support
+
+Primary support for this installer and patch is available on Discord:
+- **Discord**: [https://swrebellion.link/discord](https://swrebellion.link/discord) - Join the #game-support channel
+
 ## Acknowledgments
 
 Thanks to the Star Wars: Rebellion community for keeping this classic strategy game alive and playable on modern systems. This installer exists to make TruthRealm's excellent community fixes easily accessible to all players.

@@ -78,6 +78,10 @@ jobs:
           - Main installer executable
           - All required patch files (D3Dlmm.dll, d3drm.dll, DDraw.dll, REBEXE.exe)
           - Documentation and instructions
+          
+          ### Support
+          Primary support available on Discord: https://swrebellion.link/discord
+          Join the #game-support channel for help with installation and gameplay.
         draft: false
         prerelease: false
       env:

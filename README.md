@@ -130,6 +130,8 @@ git push origin v2.63.1.0
 
 ## Support
 
+Primary support for this installer and patch is available on Discord:
+- **Discord**: [https://swrebellion.link/discord](https://swrebellion.link/discord) - Join the #game-support channel
 - **Installation Issues**: Check `rebellion_fix_install.log` for detailed error information
 - **Multiplayer Setup**: Ensure ports TCP/UDP 2300-2400 are open in your firewall
 - **Steam Users**: Be aware that Steam may overwrite patch files during game verification

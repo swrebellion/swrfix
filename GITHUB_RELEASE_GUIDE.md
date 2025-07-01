@@ -189,13 +189,19 @@ After creating the release:
 - **Antivirus warnings**: Common with PyInstaller executables, add to exceptions
 - **File permissions**: All build scripts now handle Windows readonly attributes
 
+## Support & Community
+
+Primary support for this installer and patch is available on Discord:
+- **Discord**: [https://swrebellion.link/discord](https://swrebellion.link/discord) - Join the #game-support channel
+
 ## Next Steps
 
 Once your release is published:
 1. **Share the GitHub release link** with users
-2. **Monitor the Issues tab** for user feedback
-3. **Update the version** in your code for future releases
-4. **Create new releases** by pushing new tags (e.g., `v2.63.1.1`)
+2. **Direct users to Discord** for support and community discussions
+3. **Monitor the Issues tab** for installer-specific problems
+4. **Update the version** in your code for future releases
+5. **Create new releases** by pushing new tags (e.g., `v2.63.1.1`)
 
 ## Security Note
 

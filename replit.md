@@ -156,6 +156,10 @@ The application is built in Python using tkinter for the GUI and provides both g
     - Feature showcase and installation instructions
     - Proper contributor credits for TruthRealm and Stratus
     - Direct download links to GitHub releases
+  - ✓ Discord support integration:
+    - Primary support channel: https://swrebellion.link/discord (#game-support)
+    - Updated all documentation to reference Discord for support
+    - GitHub Pages, README, and release templates include Discord links
 
 ## User Preferences
 
