@@ -1,0 +1,80 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyinstaller pywin32
+    
+    - name: Build executable
+      run: |
+        pyinstaller --onefile --windowed --name "Star_Wars_Rebellion_Community_Fix_Installer" --icon=icon.ico main.py
+    
+    - name: Create distribution package
+      run: |
+        python build_distribution.py
+    
+    - name: Create ZIP archive
+      run: |
+        Compress-Archive -Path "Star_Wars_Rebellion_Community_Fix_v2.63.1.0\*" -DestinationPath "Star_Wars_Rebellion_Community_Fix_v2.63.1.0.zip"
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: installer-package
+        path: Star_Wars_Rebellion_Community_Fix_v2.63.1.0.zip
+    
+    - name: Create Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          Star_Wars_Rebellion_Community_Fix_v2.63.1.0.zip
+        body: |
+          ## Star Wars: Rebellion Community Fix v2.63.1.0
+          
+          ### Features
+          - ✅ Automatic game detection (GOG, Steam, Original versions)
+          - ✅ Safe backup creation with timestamps
+          - ✅ Critical shortcut modification with -w flag
+          - ✅ Windows XP compatibility configuration
+          - ✅ Steam version detection and warnings
+          - ✅ Complete uninstall/restore functionality
+          
+          ### Installation
+          1. Download the ZIP file below
+          2. Extract all files to a folder
+          3. Run `Star_Wars_Rebellion_Community_Fix_Installer.exe`
+          4. Follow the installer instructions
+          
+          ### System Requirements
+          - Windows 7/8/10/11 (32-bit or 64-bit)
+          - Star Wars: Rebellion (any version)
+          - 50MB free disk space
+          - Administrator privileges (for Program Files installations)
+          
+          ### Files Included
+          - Main installer executable
+          - All required patch files (D3Dlmm.dll, d3drm.dll, DDraw.dll, REBEXE.exe)
+          - Documentation and instructions
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
